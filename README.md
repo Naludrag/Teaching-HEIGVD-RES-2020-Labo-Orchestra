@@ -3,7 +3,7 @@
 ## Admin
 
 * **You can work in groups of 2 students**.
-* It is up to you if you want to fork this repo, or if you prefer to work in a private repo. However, you have to **use exactly the same directory structure for the validation procedure to work**. 
+* It is up to you if you want to fork this repo, or if you prefer to work in a private repo. However, you have to **use exactly the same directory structure for the validation procedure to work**.
 * We expect that you will have more issues and questions than with other labs (because we have a left some questions open on purpose). Please ask your questions on Telegram / Teams, so that everyone in the class can benefit from the discussion.
 
 ## Objectives
@@ -106,13 +106,13 @@ When you connect to the TCP interface of the **Auditor**, you should receive an 
 |Question | How can we represent the system in an **architecture diagram**, which gives information both about the Docker containers, the communication protocols and the commands? |
 | | *Insert your diagram here...* |
 |Question | Who is going to **send UDP datagrams** and **when**? |
-| | *Enter your response here...* |
+| | The musician every 1 second as said in the requirement |
 |Question | Who is going to **listen for UDP datagrams** and what should happen when a datagram is received? |
-| | *Enter your response here...* |
+| | The auditor will listent and if a UDP datagram is received, it will update the active musicians |
 |Question | What **payload** should we put in the UDP datagrams? |
-| | *Enter your response here...* |
+| | The payload of the UDP datagrams should include the uuid and the instrument of the musician |
 |Question | What **data structures** do we need in the UDP sender and receiver? When will we update these data structures? When will we query these data structures? |
-| | *Enter your response here...* |
+| | Data structure for Musician(sender) : It will contain an object having the following attributes the UUID and the sound</br>Data structure for auditor(receiver): It will conatin an array of musicians adding a new attribute that give the last time the musician was active|
 
 
 ## Task 2: implement a "musician" Node.js application
@@ -120,17 +120,17 @@ When you connect to the TCP interface of the **Auditor**, you should receive an 
 | #  | Topic |
 | ---  | --- |
 |Question | In a JavaScript program, if we have an object, how can we **serialize it in JSON**? |
-| | *Enter your response here...*  |
+| | We can use the function JSON.stringify(object)  |
 |Question | What is **npm**?  |
-| | *Enter your response here...*  |
+| | It is the package manager for NodeJS. JavaScript equivalent of Maven |
 |Question | What is the `npm install` command and what is the purpose of the `--save` flag?  |
-| | *Enter your response here...*  |
+| | npm install: install the dependancies of the application passed in parameters or contained in the file package.json</br> --save: add the dependancies in parameters in the package.json  |
 |Question | How can we use the `https://www.npmjs.com/` web site?  |
-| | *Enter your response here...*  |
+| | To search and find packages  |
 |Question | In JavaScript, how can we **generate a UUID** compliant with RFC4122? |
-| | *Enter your response here...*  |
+| | By using the uuid package. [UUID Package ref](https://www.npmjs.com/package/uuid)  |
 |Question | In Node.js, how can we execute a function on a **periodic** basis? |
-| | *Enter your response here...*  |
+| | We can use the setInterval(callback, nbMiliSeconds) function.  |
 |Question | In Node.js, how can we **emit UDP datagrams**? |
 | | *Enter your response here...*  |
 |Question | In Node.js, how can we **access the command line arguments**? |

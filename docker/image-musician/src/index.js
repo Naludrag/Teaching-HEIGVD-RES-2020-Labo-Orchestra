@@ -25,13 +25,14 @@ if (!instruments.has(instrumentName)) {
 const sound = instruments.get(instrumentName);
 const uuid = uuidv4();
 
-const musician = {
-    sound: sound,
-    uuid: uuid
-}
-
-const message = Buffer.from(JSON.stringify(musician));
 setInterval(() => {
+    const musician = {
+        sound: sound,
+        uuid: uuid,
+        activeSince: new Date()
+    };
+
+    const message = Buffer.from(JSON.stringify(musician));
     s.send(message, 0, message.length, 2206, '239.255.23.5', ((error, bytes) => {
         console.log(`Sending ${sound} via port ${s.address().port}`);
     }));
