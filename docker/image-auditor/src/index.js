@@ -29,7 +29,6 @@ s.on('message', function(msg, source) {
             activeSince: msgParse.activeSince,
             timeoutFunction:
                 setTimeout((uuid) => {
-                    console.log("I'm doing a timeout");
                 if(moment().diff(orchestra.get(uuid).activeSince) > 5000) {
                     orchestra.delete(uuid);
                 }
@@ -38,7 +37,6 @@ s.on('message', function(msg, source) {
         orchestra.set(msgParse.uuid, musician);
     }
     else{
-        console.log("i'm inside the else");
         const musician =  orchestra.get(msgParse.uuid);
         musician.activeSince = msgParse.activeSince;
         musician.timeoutFunction.refresh();
@@ -61,4 +59,4 @@ let server = net.createServer(function(socket) {
     socket.pipe(socket);
 });
 
-server.listen(2205, '127.0.0.1');
+server.listen(2205);

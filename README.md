@@ -160,15 +160,15 @@ When you connect to the TCP interface of the **Auditor**, you should receive an 
 | #  | Topic |
 | ---  | ---  |
 |Question | With Node.js, how can we listen for UDP datagrams in a multicast group? |
-| | *Enter your response here...*  |
+| | We can use socket.bind(*port, callback*) function to make the dgram.Socket to listen for datagram messages on a named port. Then, in the callback function we also use the socket.addMembership(*multicastAddress*) function. This function will inform the kernel that we want to join a given *multicastAddress* by using the IP_ADD_MEMBERSHIP option in the socket. |
 |Question | How can we use the `Map` built-in object introduced in ECMAScript 6 to implement a **dictionary**?  |
-| | *Enter your response here...* |
+| | A Map has the following structure Key=>value which means that a key is unique inside a Map. SO, if we want to create a dictionnary the keys will be the words and the values will be the description for thw word in the key. |
 |Question | How can we use the `Moment.js` npm module to help us with **date manipulations** and formatting?  |
-| | *Enter your response here...* |
+| | Moment.js is a module  that have multiple function to calculate the difference between to dates for instance we have the function *moment(date).startOf('seconds').fromNow()* that permits to have the relative time between a date and the actual time. We tried to use this function but it didn't work because it only shows "a few seconds ago" and this is not really helpful for our case.</br> In the end we used the diff() function proposed by the module. We implemented it as follwing *moment().diff(orchestra.get(uuid).activeSince)* This function will give the miliSeconds that separate the current tim(moment())e and the last time a musician give us an information(orchestra.get(uuid).activeSince).|
 |Question | When and how do we **get rid of inactive players**?  |
-| | *Enter your response here...* |
+| | We will get rid of inactive players if the we didn't receive a datagram(sound) in the last 5 seconds.</br> To delete the inactive musician we implemented a timeout function that will run after 5 seconds without receiving any information(datagram) of a musician.</br> When ran this function will check the difference between the actual time and the last time we receive a message(activeSince), with the help of the Moment.js module it is simple to do that.</br> If this difference is higher than 5 seconds we delete the musician from the list. If not we let the musician in the list. |
 |Question | How do I implement a **simple TCP server** in Node.js?  |
-| | *Enter your response here...* |
+| | First we need to install the **net** module. This module allow us to create stream-based TCP server by using the net.createServer(callback) function. Then to start the TCP server we nedd to use the server.listen(ports, address) function. The server will then listen for connection on the given port and address.  |
 
 
 ## Task 5: package the "auditor" app in a Docker image
@@ -176,7 +176,7 @@ When you connect to the TCP interface of the **Auditor**, you should receive an 
 | #  | Topic |
 | ---  | --- |
 |Question | How do we validate that the whole system works, once we have built our Docker image? |
-| | *Enter your response here...* |
+| | By using telnet to connect to the container that runs the Auditor app and check if the list returned in response contains all the musicians that we started. Then we delete 1 musician and see if it is still in the list after 5 seconds. |
 
 
 ## Constraints
