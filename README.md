@@ -106,13 +106,13 @@ When you connect to the TCP interface of the **Auditor**, you should receive an 
 |Question | How can we represent the system in an **architecture diagram**, which gives information both about the Docker containers, the communication protocols and the commands? |
 | | *Insert your diagram here...* |
 |Question | Who is going to **send UDP datagrams** and **when**? |
-| | The musician every 1 second as said in the requirement |
+| | The musician sends UDP datagrams every 1 second as specified in the `Musician` requirements |
 |Question | Who is going to **listen for UDP datagrams** and what should happen when a datagram is received? |
-| | The auditor will listent and if a UDP datagram is received, it will update the active musicians |
+| | The auditor will listen for incoming UDP datagrams. For every new received datagram, the auditor will update the active musician list.|
 |Question | What **payload** should we put in the UDP datagrams? |
-| | The payload of the UDP datagrams should include the uuid and the instrument of the musician |
+| | The payload of the UDP datagrams should include the uuid and the instrument of the musician. We thought of including the timestamp, but we decided that it is the auditor's responsibility. |
 |Question | What **data structures** do we need in the UDP sender and receiver? When will we update these data structures? When will we query these data structures? |
-| | Data structure for Musician(sender) : It will contain an object having the following attributes the UUID and the sound</br>Data structure for auditor(receiver): It will conatin an array of musicians adding a new attribute that give the last time the musician was active|
+| | Data structure for Musician(sender) : The musician needs a constant object containing his UUID and his sound. </br></br> Data structure for auditor(receiver): In order to match a sound (key) with an instrument (value), our auditor will use a Map. An additional map is used to maintain the list of active musicians with the UUID as key. The value is an object with the following properties : instrument, activeSince, timeoutFunction (used to check if the musician is still active after x seconds). |
 
 
 ## Task 2: implement a "musician" Node.js application
@@ -120,21 +120,21 @@ When you connect to the TCP interface of the **Auditor**, you should receive an 
 | #  | Topic |
 | ---  | --- |
 |Question | In a JavaScript program, if we have an object, how can we **serialize it in JSON**? |
-| | We can use the function JSON.stringify(object)  |
+| | We can use the function `JSON.stringify(object)`.  |
 |Question | What is **npm**?  |
-| | It is the package manager for NodeJS. JavaScript equivalent of Maven |
+| | It is the package manager for NodeJS. Basically the JavaScript equivalent of Maven |
 |Question | What is the `npm install` command and what is the purpose of the `--save` flag?  |
-| | npm install: install the dependancies of the application passed in parameters or contained in the file package.json</br> --save: add the dependancies in parameters in the package.json  |
+| | npm install: install the dependencies passed in parameters or contained in the file package.json into the node_modules directory in the current path. </br> --save: install the dependencies in parameters and save them into the package.json  |
 |Question | How can we use the `https://www.npmjs.com/` web site?  |
-| | To search and find packages  |
+| | We can simply open the page in a browser in order to search and find packages to install |
 |Question | In JavaScript, how can we **generate a UUID** compliant with RFC4122? |
-| | By using the uuid package. [UUID Package ref](https://www.npmjs.com/package/uuid)  |
+| | By using the uuid package available through npm. [UUID Package ref](https://www.npmjs.com/package/uuid)  |
 |Question | In Node.js, how can we execute a function on a **periodic** basis? |
-| | We can use the setInterval(callback, nbMiliSeconds) function.  |
+| | We can use the setInterval(callback, nbMilliSeconds) function to execute the callback function periodically. |
 |Question | In Node.js, how can we **emit UDP datagrams**? |
-| | *Enter your response here...*  |
+| | Node.JS provides a default module named `dgram`. This module provides support for UDP socket and contains a function to send (emit) datagrams. |
 |Question | In Node.js, how can we **access the command line arguments**? |
-| | *Enter your response here...*  |
+| | The command line arguments are exposed through the `process.argv` object. |
 
 
 ## Task 3: package the "musician" app in a Docker image
@@ -142,15 +142,15 @@ When you connect to the TCP interface of the **Auditor**, you should receive an 
 | #  | Topic |
 | ---  | --- |
 |Question | How do we **define and build our own Docker image**?|
-| | *Enter your response here...*  |
+| | We create a Dockerfile in order to define our own Docker image. This file can easily be built to create an image with the `docket build` command. |
 |Question | How can we use the `ENTRYPOINT` statement in our Dockerfile?  |
-| | *Enter your response here...*  |
+| |   |
 |Question | After building our Docker image, how do we use it to **run containers**?  |
 | | *Enter your response here...*  |
 |Question | How do we get the list of all **running containers**?  |
-| | *Enter your response here...*  |
+| | We can use the `docker ps` command to do exactly that.  |
 |Question | How do we **stop/kill** one running container?  |
-| | *Enter your response here...*  |
+| | Once the container name or ID is obtained, it is possible to run `docker stop name_or_id`/`docker kill name_or_id`.  |
 |Question | How can we check that our running containers are effectively sending UDP datagrams?  |
 | | *Enter your response here...*  |
 
