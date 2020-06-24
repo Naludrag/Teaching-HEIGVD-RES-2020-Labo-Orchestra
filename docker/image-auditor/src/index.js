@@ -29,10 +29,10 @@ s.on('message', function(msg, source) {
             activeSince: msgParse.activeSince,
             timeoutFunction:
                 setTimeout((uuid) => {
-                if(moment().diff(orchestra.get(uuid).activeSince) > 5000) {
+                //if(moment().diff(orchestra.get(uuid).activeSince) > 5000) {
                     orchestra.delete(uuid);
-                }
-            }, 5000, msgParse.uuid)
+                //}
+            }, 8000, msgParse.uuid)
         };
         orchestra.set(msgParse.uuid, musician);
     }
@@ -57,6 +57,7 @@ let server = net.createServer(function(socket) {
     const message = Buffer.from(JSON.stringify(orchestraParse));
     socket.write(message);
     socket.pipe(socket);
+    socket.destroy();
 });
 
 server.listen(2205);
