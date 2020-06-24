@@ -9,4 +9,4 @@ WORKDIR /opt/app
 
 RUN npm install
 
-ENTRYPOINT [ "npm", "start", "--" ]
+ENTRYPOINT [ "node", "index.js" ]
