@@ -112,7 +112,7 @@ When you connect to the TCP interface of the **Auditor**, you should receive an 
 |Question | What **payload** should we put in the UDP datagrams? |
 | | The payload of the UDP datagrams should include the uuid and the instrument of the musician. We thought of including the timestamp, but we decided that it is the auditor's responsibility. |
 |Question | What **data structures** do we need in the UDP sender and receiver? When will we update these data structures? When will we query these data structures? |
-| | Data structure for Musician(sender) : The musician needs a constant object containing his UUID and his sound. </br></br> Data structure for auditor(receiver): In order to match a sound (key) with an instrument (value), our auditor will use a Map. An additional map is used to maintain the list of active musicians with the UUID as key. The value is an object with the following properties : instrument, activeSince, timeoutFunction (used to check if the musician is still active after x seconds). |
+| | Data structure for Musician(sender) : The musician needs a constant object containing his UUID and his sound. </br></br> Data structure for auditor(receiver): In order to match a sound (key) with an instrument (value), our auditor will use a Map. An additional map is used to maintain the list of active musicians with the UUID as key. The value is an object with the following properties : instrument, activeSince, lastSeen, timeoutFunction (used to check if the musician is still active after x seconds). |
 
 
 ## Task 2: implement a "musician" Node.js application
@@ -142,17 +142,17 @@ When you connect to the TCP interface of the **Auditor**, you should receive an 
 | #  | Topic |
 | ---  | --- |
 |Question | How do we **define and build our own Docker image**?|
-| | We create a Dockerfile in order to define our own Docker image. This file can easily be built to create an image with the `docket build` command. |
+| | We create a Dockerfile in order to define our own Docker image. This file can easily be built to create an image with the `docker build` command. |
 |Question | How can we use the `ENTRYPOINT` statement in our Dockerfile?  |
-| |   |
+| | This statement defines the command that will be executed when the container starts. As we'd like to use npm, our statement will be `ENTRYPOINT [ "node", "index.js" ]`.|
 |Question | After building our Docker image, how do we use it to **run containers**?  |
-| | *Enter your response here...*  |
+| | As specified in the requirements, we should be able to run a musician container with this command : `$ docker run -d res/musician instrumentName`.  |
 |Question | How do we get the list of all **running containers**?  |
 | | We can use the `docker ps` command to do exactly that.  |
 |Question | How do we **stop/kill** one running container?  |
 | | Once the container name or ID is obtained, it is possible to run `docker stop name_or_id`/`docker kill name_or_id`.  |
 |Question | How can we check that our running containers are effectively sending UDP datagrams?  |
-| | *Enter your response here...*  |
+| | The easiest way is to open Wireshark and capture the traffic on the `docker0` interface. Once the capture is started, we can see the UDP datagrams that are being sent by the container. |
 
 
 ## Task 4: implement an "auditor" Node.js application
