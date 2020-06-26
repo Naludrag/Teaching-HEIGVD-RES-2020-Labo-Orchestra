@@ -1,3 +1,5 @@
+const protocol = require('./protocol');
+
 // Import uuiv4 (random uuid)
 const {v4: uuidv4} = require('uuid');
 
@@ -30,7 +32,7 @@ const musician = {
 const message = Buffer.from(JSON.stringify(musician));
 
 setInterval(() => {
-    s.send(message, 0, message.length, 2206, '239.255.23.5', ((error, bytes) => {
+    s.send(message, 0, message.length, protocol.udp.multicast_port, protocol.udp.multicast_address, ((error, bytes) => {
         console.log(`Sending ${musician.sound} via port ${s.address().port}`);
     }));
 }, 1000);

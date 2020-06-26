@@ -3,6 +3,7 @@ const dgram = require('dgram');
 const s = dgram.createSocket('udp4');
 const net = require('net');
 const moment = require('moment');
+const protocol = require('./protocol')
 
 const instruments = new Map();
 const orchestra = new Map();
@@ -10,7 +11,7 @@ const orchestra = new Map();
 instruments.set("ti-ta-ti", "piano");
 instruments.set("pouet", "trumpet");
 instruments.set("trulu", "flute");
-instruments.set("gzi-gzi", "violin");
+instruments.set("gzi-gzils", "violin");
 instruments.set("boum-boum", "drum");
 
 function getMusicianTimeout(uuid) {
@@ -30,9 +31,9 @@ function musicianFormat(key, values){
     };
 }
 
-s.bind(2206, function() {
+s.bind(protocol.udp.multicast_port, function() {
     console.log("Auditor joining multicast group");
-    s.addMembership('239.255.23.5');
+    s.addMembership(protocol.udp.multicast_address);
 });
 
 // This call back is invoked when a new datagram has arrived.
@@ -63,4 +64,4 @@ let server = net.createServer(function(socket) {
     socket.end();
 });
 
-server.listen(2205);
+server.listen(protocol.tcp.port);
