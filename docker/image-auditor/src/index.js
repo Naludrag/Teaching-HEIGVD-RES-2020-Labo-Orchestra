@@ -2,49 +2,27 @@
 const dgram = require('dgram');
 const s = dgram.createSocket('udp4');
 const net = require('net');
-var moment = require('moment');
+const moment = require('moment');
 
 const instruments = new Map();
+const orchestra = new Map();
+
 instruments.set("ti-ta-ti", "piano");
 instruments.set("pouet", "trumpet");
 instruments.set("trulu", "flute");
 instruments.set("gzi-gzi", "violin");
 instruments.set("boum-boum", "drum");
 
-let orchestra = new Map();
+function getMusicianTimeout(uuid) {
+    // Timeout function is ran after 6 seconds and checks if the musician is inactive
+    return setTimeout(() => {
+        if(moment().diff(orchestra.get(uuid).lastSeen) > 5000) {
+            orchestra.delete(uuid);
+        }
+    }, 6000)
+}
 
-s.bind(2206, function() {
-    console.log("Auditor joining multicast group");
-    s.addMembership('239.255.23.5');
-});
-
-// This call back is invoked when a new datagram has arrived.
-s.on('message', function(msg, source) {
-    console.log("Musician has arrived: '" + msg + "'. Source address: " + source.address + ", source port: " + source.port + "\n");
-
-    let msgParse = JSON.parse(msg);
-    if(!orchestra.has(msgParse.uuid)) {
-        let musician = {
-            instrument: instruments.get(msgParse.sound),
-            activeSince: msgParse.activeSince,
-            timeoutFunction:
-                setTimeout((uuid) => {
-                //if(moment().diff(orchestra.get(uuid).activeSince) > 5000) {
-                    orchestra.delete(uuid);
-                //}
-            }, 8000, msgParse.uuid)
-        };
-        orchestra.set(msgParse.uuid, musician);
-    }
-    else{
-        const musician =  orchestra.get(msgParse.uuid);
-        musician.activeSince = msgParse.activeSince;
-        musician.timeoutFunction.refresh();
-    }
-
-});
-
-function musicienFormat(key, values){
+function musicianFormat(key, values){
     return {
         uuid: key,
         instrument: values.instrument,
@@ -52,12 +30,37 @@ function musicienFormat(key, values){
     };
 }
 
+s.bind(2206, function() {
+    console.log("Auditor joining multicast group");
+    s.addMembership('239.255.23.5');
+});
+
+// This call back is invoked when a new datagram has arrived.
+s.on('message', (msg, source) => {
+    console.log("Musician has arrived: '" + msg + "'. Source address: " + source.address + ", source port: " + source.port + "\n");
+    let {uuid, sound} = JSON.parse(msg);
+    let curTime = new Date();
+    if(!orchestra.has(uuid)) {
+        let musician = {
+            instrument: instruments.get(sound),
+            activeSince: curTime,
+            lastSeen: curTime,
+            timeoutFunction: getMusicianTimeout(uuid)
+        };
+        orchestra.set(uuid, musician);
+    } else {
+        const musician = orchestra.get(uuid);
+        musician.lastSeen = curTime;
+        musician.timeoutFunction.refresh();
+    }
+});
+
 let server = net.createServer(function(socket) {
-    let orchestraParse = Array.from(orchestra, ([key, val]) => musicienFormat(key, val));
+    let orchestraParse = Array.from(orchestra, ([key, val]) => musicianFormat(key, val));
     const message = Buffer.from(JSON.stringify(orchestraParse));
     socket.write(message);
     socket.pipe(socket);
-    socket.destroy();
+    socket.end();
 });
 
 server.listen(2205);

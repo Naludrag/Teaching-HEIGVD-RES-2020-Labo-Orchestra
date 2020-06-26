@@ -22,18 +22,15 @@ if (!instruments.has(instrumentName)) {
     console.log("The instrument is invalid.")
     process.exit(-1);
 }
-const sound = instruments.get(instrumentName);
-const uuid = uuidv4();
+
+const musician = {
+    sound: instruments.get(instrumentName),
+    uuid: uuidv4()
+};
+const message = Buffer.from(JSON.stringify(musician));
 
 setInterval(() => {
-    const musician = {
-        sound: sound,
-        uuid: uuid,
-        activeSince: new Date()
-    };
-
-    const message = Buffer.from(JSON.stringify(musician));
     s.send(message, 0, message.length, 2206, '239.255.23.5', ((error, bytes) => {
-        console.log(`Sending ${sound} via port ${s.address().port}`);
+        console.log(`Sending ${musician.sound} via port ${s.address().port}`);
     }));
 }, 1000);
