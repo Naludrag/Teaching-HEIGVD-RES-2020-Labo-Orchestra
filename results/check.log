@@ -1,0 +1,43 @@
+origin	https://github.com/Naludrag/Teaching-HEIGVD-RES-2020-Labo-Orchestra (fetch)
+origin	https://github.com/Naludrag/Teaching-HEIGVD-RES-2020-Labo-Orchestra (push)
+Starting auditor container "fcc1cc71a385710712cf141bbd8e9dd06a6585c20fc47801891d5f6ffaf4296a"
+Starting auditor container "141a256c7b77775e780698886f1f0770e86fcfb12228df6d14ff4f814c40dbb9"
+Starting auditor container "9b15a2658e36ad676ec6a475646942f143ae3786b752a7b73c65cdf0e7055755"
+Starting auditor container "b802c8d6f73e89f19aa6e67605d01af79aa20a48d60539934b2fee7177eb41c7"
+Starting auditor container "8ffbf0273c989b9c0fb85e9f400dbe08e8027c4bcc008e90f29929f815b41ead"
+Starting auditor container "545e2eaa34749534bbcc7c98964d7b9e31103db3cfb3251cc0c9de86a97e3b50"
+Starting auditor container "4c102e52b18e369c45eb453944fc48b1557df59b1288d85a438dbcedded440e7"
+Starting auditor container "7c2b831e437450747ed6b09c77995bef5b07f8d23f9a97d8c1795589324fe8ef"
+Starting auditor container "70fca41316177f565a1361c9fba912f4d9a749f27b8937429c74d538f125c0cb"
+Starting auditor container "795d7206fa7f75979cb53bdf6d6abd175af31caa3f9907022cb544b69d9015a0"
+Starting auditor container "0ec9146fc3423af0c5bd21ac56a84857680f071c217a556acd144a9e895a3a1a"
+11 containers have been started.
+fcc1cc71a385710712cf141bbd8e9dd06a6585c20fc47801891d5f6ffaf4296a : index.js,flute
+8ffbf0273c989b9c0fb85e9f400dbe08e8027c4bcc008e90f29929f815b41ead : index.js,trumpet
+7c2b831e437450747ed6b09c77995bef5b07f8d23f9a97d8c1795589324fe8ef : index.js,piano
+70fca41316177f565a1361c9fba912f4d9a749f27b8937429c74d538f125c0cb : index.js,drum
+545e2eaa34749534bbcc7c98964d7b9e31103db3cfb3251cc0c9de86a97e3b50 : index.js,drum
+141a256c7b77775e780698886f1f0770e86fcfb12228df6d14ff4f814c40dbb9 : index.js,piano
+9b15a2658e36ad676ec6a475646942f143ae3786b752a7b73c65cdf0e7055755 : index.js,trumpet
+795d7206fa7f75979cb53bdf6d6abd175af31caa3f9907022cb544b69d9015a0 : index.js,violin
+b802c8d6f73e89f19aa6e67605d01af79aa20a48d60539934b2fee7177eb41c7 : index.js,drum
+4c102e52b18e369c45eb453944fc48b1557df59b1288d85a438dbcedded440e7 : index.js,piano
+0ec9146fc3423af0c5bd21ac56a84857680f071c217a556acd144a9e895a3a1a : npm,start
+Auditor validation: success: ["drum","drum","drum","flute","piano","piano","piano","trumpet","trumpet","violin"]
+There are 10 musicians, let's kill one
+killed 141a256c7b77775e780698886f1f0770e86fcfb12228df6d14ff4f814c40dbb9
+Auditor validation: success: ["drum","drum","drum","flute","piano","piano","trumpet","trumpet","violin"]
+Scheduling a new test
+There are 9 musicians, let's kill one
+killed 4c102e52b18e369c45eb453944fc48b1557df59b1288d85a438dbcedded440e7
+Auditor validation: success: ["drum","drum","drum","flute","piano","trumpet","trumpet","violin"]
+Scheduling a new test
+There are 8 musicians, let's kill one
+killed 795d7206fa7f75979cb53bdf6d6abd175af31caa3f9907022cb544b69d9015a0
+Auditor validation: success: ["drum","drum","drum","flute","piano","trumpet","trumpet"]
+Scheduling a new test
+There are 7 musicians, let's kill one
+killed 545e2eaa34749534bbcc7c98964d7b9e31103db3cfb3251cc0c9de86a97e3b50
+Auditor validation: success: ["drum","drum","flute","piano","trumpet","trumpet"]
+Scheduling a new test
+We have done all tests.
