@@ -1,3 +1,4 @@
+// Contain all the ports and ip used the protocol
 module.exports = {
     udp: {
         multicast_address: '239.255.23.5', 
