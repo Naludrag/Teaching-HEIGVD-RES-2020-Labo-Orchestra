@@ -11,7 +11,7 @@ const orchestra = new Map();
 instruments.set("ti-ta-ti", "piano");
 instruments.set("pouet", "trumpet");
 instruments.set("trulu", "flute");
-instruments.set("gzi-gzils", "violin");
+instruments.set("gzi-gzi", "violin");
 instruments.set("boum-boum", "drum");
 
 function getMusicianTimeout(uuid) {
